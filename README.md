@@ -1,2 +1,4 @@
 # hackerrank
-my solution codes (in C++) to problems on hackerrank.com
+My (username: d3v0t33) solution codes (in C++) to problems on hackerrank.com
+
+Naming convention: A code file named "[PROBLEM_NAME].cpp" is solution code to the problem on the web page https://www.hackerrank.com/challenges/[PROBLEM_NAME].
