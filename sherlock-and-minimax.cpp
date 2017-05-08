@@ -1,44 +1,41 @@
 #include <iostream>
 #include <algorithm>
+#include <climits>
+#include <cstdlib>
 using namespace std;
 
-int binSearch(int a[], int n, int num, int left, int right) {
-	if (right <= left) {
-	    if (num < a[left]) return -1;
-	    else return left;
-	}
-	int mid = left + (right - left) / 2;
-	if (num == a[mid]) return mid;
-	else if (num < a[mid]) return binSearch(a, n, num, left, mid - 1);
-	else {
-	    if (mid + 1 < n and num < a[mid + 1]) return mid;
-	    else return binSearch(a, n, num, mid + 1, right);
-	}
-}
+int n, minDiff, maxMinDiff = -1, minNum, a[101];
 
-int lBinarySearch(int a[], int num, int n) {
-	return binSearch(a, n, num, 0, n - 1);
+void check(int elem) {
+    minDiff = INT_MAX;
+    for (int i = 0; i < n; i++) minDiff = min(minDiff, abs(elem - a[i]));
+    if (minDiff > maxMinDiff) {
+        maxMinDiff = minDiff;
+        minNum = elem;
+    }
+    return;
 }
 
 int main() {
-	int n;
-	cin >> n;
-	int a[n], p, q;
-	for (int i = 0; i < n; i++) cin >> a[i];
-	sort(a, a + n);
-	cin >> p >> q;
+    cin >> n;
 
-	int minNum, maxMinDiff = -1, minDiff;
-	for (int i = p; i <= q; i++) {
-		int low = lBinarySearch(a, i, n);
-		if (low == -1) minDiff = a[0] - i;
-		else if (low == n - 1) minDiff = i - a[n - 1];
-		else minDiff = min(i - a[low], a[low + 1] - i);
-		if (minDiff > maxMinDiff) {
-			maxMinDiff = minDiff;
-			minNum = i;
-		}
-	}
+    for (int i = 0; i < n; i++) cin >> a[i];
 
-	cout << minNum << "\n";
+    int P, Q;
+    cin >> P >> Q;
+    check(P);
+
+    int elem;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            elem = (a[i] + a[j]) / 2;
+            if (P <= elem and elem <= Q) {
+                check(elem);
+            }
+        }
+    }
+
+    check(Q);
+
+    cout << minNum << "\n";
 }
